@@ -1,0 +1,57 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: url(background.png);
+}
+
+#escape-qbox {
+    background: white;
+    color:#001e4d;
+    width: 90%;
+    margin: 50px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.escape-btn {
+    background: white;
+    color:#001e4d;
+    font-weight: 500;
+    width: 27%;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 2% 3% 0;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.escape-btn:hover:not([disabled]) {
+    background: #001e4d;
+    color: white;
+}
+
+.escape-btn:disabled {
+    cursor: auto;
+}
+
+.escape-correct {
+    background: #99eebb;
+}
+
+.escape-incorrect {
+    background: #ff9999;
+}
+
+#escape-canvas {
+    border-radius: 4px;
+    border: 2px solid white;
+    margin: 50px auto 0;
+    display: block;
+    padding: 0;
+    width: 90%;
+    background: url("./scrollmap/scroll1.png");
+    background-size: contain;
+}
