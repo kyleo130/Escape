@@ -1,7 +1,7 @@
 import { Player } from "./sprites/player.js";
 import { Enemy } from "./sprites/enemy.js";
 import { Smoke } from "./sprites/smoke.js";
-import { disableButtons ,showLose } from "./script.js";
+import { disableButtons , showLose } from "./script.js";
 
 let backgroundSpeed = 30;
 let backgroundX = 0;
