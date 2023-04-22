@@ -1,13 +1,13 @@
 * {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Audiowide", sans-serif;
 }
 
 body {
-    background: url(background.png);
+    background: url("./background_sky.png");
 }
 
 #escape-qbox {
-    background: white;
+    background: #cfe2ff;
     color:#001e4d;
     width: 90%;
     margin: 50px auto 0;
@@ -20,11 +20,12 @@ body {
     color:#001e4d;
     font-weight: 500;
     width: 27%;
-    border: 1px solid black;
+    border: 1px solid transparent;
+    box-shadow: 2px 2px 2px 2px;
     padding: 10px;
     margin: 2% 3% 0;
     text-align: center;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
