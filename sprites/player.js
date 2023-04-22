@@ -10,7 +10,7 @@ export const Player = function(ctx, x, y) {
     const sprite = Sprite(ctx, x, y);
 
     sprite.setSequence(sequences.idle)
-          .setScale(2)
+          .setScale(2.5)
           .useSheet("./asset/Players/players blue x1.png");
 
     const move = function() {

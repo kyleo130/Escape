@@ -11,13 +11,13 @@ export const Enemy = function(ctx, x, y) {
     const sprite = Sprite(ctx, x, y);
 
     sprite.setSequence(sequences.idle)
-          .setScale(2)
+          .setScale(2.5)
           .useSheet("./asset/Enemies/enemies x1.png");
 
-    let speed = 30;
+    let speed = 20;
 
     const move = function() {
-        speed = 30;
+        speed = 20;
         sprite.setSequence(sequences.move);
     };
 
@@ -27,7 +27,7 @@ export const Enemy = function(ctx, x, y) {
     };
 
     const hurt = function() {
-        speed = -30;
+        speed = -60;
         sprite.setSequence(sequences.hurt);
     };
 
@@ -37,11 +37,11 @@ export const Enemy = function(ctx, x, y) {
     }
 
     const speedUp = function() {
-        speed = 70;
+        speed = 40;
     };
 
     const speedNormal = function() {
-        speed = 30;
+        speed = 20;
     }
 
     const update = function(time) {

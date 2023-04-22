@@ -10,8 +10,15 @@
         <canvas id="escape-canvas" width="1024px" height="128px"></canvas>
     </div>
     <div id="escape-qbox">
-        <div id="escape-question">Question</div>
-        <div id="escape-choices"></div>
+        <div id="escape-question">
+            <h2>Answer all the questions to defeat the enemy! </h2>
+            You lose if the enemy catchs you. <br>
+            If you answer a question correctly, the enemy stops running for 3 seconds. <br>
+            If you give a wrong answer, the enemy speeds up.
+        </div>
+        <div id="escape-choices">
+            <button class="escape-btn" id="escape-start">Start!</button>
+        </div>
     </div>
     <script type="module" src="script.js"></script>
     <script type="module" src="sprites/sprite.js"></script>
@@ -20,5 +27,5 @@
     <script type="module" src="sprites/smoke.js"></script>
     <script type="module" src="sprites/bounding_box.js"></script>
     <script type="module" src="gamescreen.js"></script>
-
+    <script type="module" src="questions.js"></script>
 </body>

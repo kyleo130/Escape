@@ -1,27 +1,11 @@
-import { clickCorrect, clickWrong, endGame } from "./gamescreen.js";
+import { clickCorrect, clickWrong, getPlayerAlive, startPlay, endPlay } from "./gamescreen.js";
+import { getQuestionSet } from "./questions.js";
 
-const questions = [
-    {
-        question: `Which of the following assigns the value “happy” into a variable called “feel”?`,
-        choices: [
-            {text: `let feel = "happy";`, correct: true},
-            {text: `let feel = happy;`, correct: false},
-            {text: `let feel -> "happy";`, correct: false}
-        ]
-    },
-    {
-        question: `Given the following code: let x = 5 + 6;
-What is the value stored in x?`,
-        choices: [
-            {text: `11 (Number)`, correct: true},
-            {text: `56 (Number)`, correct: false},
-            {text: `"5+6" (String)`, correct: false}
-        ]
-    },
-]
+const questions = getQuestionSet(0);
 
 const questionElement = document.getElementById("escape-question");
 const choiceElements = document.getElementById("escape-choices");
+const startBtn = document.getElementById("escape-start");
 
 let questionNo = 1;
 let score = 0;
@@ -40,7 +24,9 @@ function shuffleArray(arr) {
 function startGame() {
     questionNo = 1;
     score = 0;
+    startPlay();
     showQuestion();
+    startBtn.style.display = "hidden";
 }
 
 function removePrevQustion() {
@@ -63,7 +49,7 @@ function selectAnswer(elem) {
 
     Array.from(choiceElements.children).forEach(btn => {
         if (btn.dataset.correct === "true") {
-            btn.classList.add("correct");
+            btn.classList.add("escape-correct");
         }
         btn.disabled = true;
     });
@@ -104,8 +90,10 @@ function handleNextQuestion() {
     if (questionNo <= questions.length) {
         showQuestion();
     } else {
-        endGame();
-        setTimeout(showWin, 3000);
+        if (getPlayerAlive()) {
+            endPlay();
+            setTimeout(showWin, 3000);
+        }
     }
 }
 
@@ -115,4 +103,4 @@ export function disableButtons() {
     })
 }
 
-startGame();
+startBtn.addEventListener("click", startGame);

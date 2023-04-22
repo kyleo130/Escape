@@ -1,21 +1,13 @@
 import { Player } from "./sprites/player.js";
 import { Enemy } from "./sprites/enemy.js";
 import { Smoke } from "./sprites/smoke.js";
-import { disableButtons ,showLose } from "./script.js";
+import { disableButtons , showLose } from "./script.js";
 
-let backgroundSpeed = 30;
+let backgroundSpeed = 1;
 let backgroundX = 0;
 
-const bg1 = new Image();
-bg1.src = "./scrollmap/scroll1.png";
-const bg2 = new Image();
-bg2.src = "./scrollmap/scroll2.png";
-const bg3 = new Image();
-bg3.src = "./scrollmap/scroll3.png";
-const bg4 = new Image();
-bg4.src = "./scrollmap/scroll4.png";
-const bg5 = new Image();
-bg5.src = "./scrollmap/scroll5.png";
+const bg = new Image();
+bg.src = "./scrollmap/scrollmap.png"
 
 let reqID = 0;
 
@@ -27,11 +19,12 @@ const enemy = Enemy(context, 256, 64);
 const smoke = Smoke(context, 256, 64);
 
 let playerAlive = true;
+let smokeVisible = false;
 
 export function clickCorrect() {
+    smokeVisible = true;
     enemy.hurt();
     smoke.start();
-    smoke.draw();
     setTimeout(resetEnemy, 3000);
 }
 
@@ -40,34 +33,41 @@ export function clickWrong() {
     setTimeout(resetEnemy, 3000);
 }
 
-export function endGame() {
+export function getPlayerAlive() {
+    return playerAlive;
+}
+
+export function endPlay() {
+    backgroundSpeed = 0;
     enemy.die();
     player.stop();
-    setTimeout(() => {
-        cancelAnimationFrame(reqID);
-    }, 3000);
+    setTimeout(stopAnimation, 3000);
+}
+
+export function startPlay() {
+    backgroundSpeed = 1;
+    player.move();
+    enemy.move();
 }
 
 function resetEnemy() {
-    enemy.move();
-    enemy.speedNormal();
+    if (playerAlive) {
+        enemy.move();
+        enemy.speedNormal();
+    }
+    smokeVisible = false;
 }
 
 function resetPlayer() {
     player.move();
 }
 
+function stopAnimation() {
+    cancelAnimationFrame(reqID);
+}
+
 /* The main processing of the game */
 function doFrame(now) {
-    /* Draw background */
-    /*
-    context.drawImage(backgrounds[0], backgroundX, 0);
-    if (backgroundX < -3072) {
-        backgroundX = 3072;
-    } else {
-        backgroundX -= backgroundSpeed;
-    }
-    */
     
     /* Update the sprites */
     player.update(now);
@@ -82,30 +82,44 @@ function doFrame(now) {
         const {x, y} = enemy.getXY();
         const box = player.getBoundingBox();
         if (box.isPointInBox(x, y)) {
+            backgroundSpeed = 0;
             player.die();
             enemy.stop();
             playerAlive = false;
             disableButtons();
-            setTimeout(showLose, 2000);
+            setTimeout(() => {
+                showLose();
+                stopAnimation();
+            }, 2000);
         }
     }
 
     /* Clear the screen */
     context.clearRect(0, 0, cv.width, cv.height);
 
+    /* Draw background */
+    context.drawImage(bg, backgroundX, 0);
+    context.drawImage(bg, backgroundX + 5120, 0);
+    if (backgroundX < -5120) {
+        backgroundX = 0;
+    } else {
+        backgroundX -= backgroundSpeed;
+    }
+
     /* Draw the sprites */
     player.draw();
     enemy.draw();
+    if (smokeVisible) {
+        smoke.draw();
+    }
 
     /* Process the next frame */
     reqID = requestAnimationFrame(doFrame);
 }
 
 window.onload = () => {
-    /* Move sprites */
-    player.move();
-    enemy.move();
-
-    /* Start the game */
+    player.stop();
+    enemy.stop();
+    backgroundSpeed = 0;
     reqID = requestAnimationFrame(doFrame);
 }
